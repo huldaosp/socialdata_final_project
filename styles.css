@@ -1,0 +1,134 @@
+:root {
+    --background: #fafaf9;
+    --foreground: #1a1a1a;
+    --muted-foreground: #737373;
+    --smiley-happy: #22c55e;
+    --smiley-neutral: #eab308;
+    --smiley-sad: #ef4444;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Manrope', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--background);
+    color: var(--foreground);
+    line-height: 1.6;
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    max-width: 800px;
+    text-align: center;
+}
+
+.smiley-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.smiley {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+}
+
+.smiley-icon {
+    width: 80px;
+    height: 80px;
+    stroke-width: 1.5;
+}
+
+.smiley.happy .smiley-icon { color: var(--smiley-happy); }
+.smiley.neutral .smiley-icon { color: var(--smiley-neutral); }
+.smiley.sad .smiley-icon { color: var(--smiley-sad); }
+
+.smiley:nth-child(2) { animation-delay: 0.3s; }
+.smiley:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: var(--muted-foreground);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.scroll-indicator {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.scroll-arrow {
+    display: inline-block;
+    animation: bounce-down 1s infinite;
+}
+
+@keyframes bounce-down {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(5px); }
+}
+
+.section {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.section-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.section p {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Alternate section background */
+.section:nth-child(even) {
+    background-color: #f5f5f4;
+}
