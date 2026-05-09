@@ -56,6 +56,8 @@ async function loadSections() {
     const sections = [
         'sections/key-findings.html',
         'sections/inspection-improvement.html',
+        'sections/category-risk.html',
+        'sections/failed-inspections-map.html',
         'sections/methodology.html',
         'sections/conclusion.html',
     ];
