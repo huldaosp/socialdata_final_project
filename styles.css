@@ -5,7 +5,7 @@
     --smiley-happy: #22c55e;
     --smiley-neutral: #eab308;
     --smiley-sad: #ef4444;
-    --font-display: 'Fraunces', serif;
+    --font-display: 'Playfair Display', serif;
     --font-body: 'Manrope', sans-serif;
 }
 
@@ -101,34 +101,3 @@ body {
     40% { transform: translateY(5px); }
 }
 
-.section {
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    display: flex;
-    align-items: center;
-}
-
-.section-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.section h2 {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-}
-
-.section p {
-    font-size: 1.125rem;
-    color: var(--muted-foreground);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Alternate section background */
-.section:nth-child(even) {
-    background-color: #f5f5f4;
-}

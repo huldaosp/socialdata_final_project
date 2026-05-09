@@ -1,23 +1,249 @@
-<section id="category-risk" style="padding: 3rem 1.5rem 2rem; font-family: 'Manrope', system-ui, sans-serif;">
-  <div style="max-width: 960px; margin: 0 auto;">
+<section id="category-risk" style="padding: 3rem 1.5rem 2.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
+  <style>
+    #category-risk * { box-sizing: border-box; }
 
-    <p style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.75rem;">
-      Inspection risk by business category
-    </p>
-    <h2 style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;">
-      Which types of businesses fail most often?
-    </h2>
-    <p style="font-size: 15px; color: #6b7280; line-height: 1.6; margin-bottom: 1.75rem; max-width: 640px;">
+    .cr-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9ca3af; margin-bottom: 0.75rem;
+    }
+    #category-risk h2 {
+      font-family: var(--font-display, 'Playfair Display', serif);
+      font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700;
+      color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;
+    }
+    .cr-subtitle {
+      font-size: 15px; color: #6b7280; line-height: 1.6;
+      margin-bottom: 1.5rem; max-width: 640px;
+    }
+
+    /* Tabs */
+    .cr-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+    .cr-tab {
+      padding: 6px 16px; border-radius: 8px;
+      border: 0.5px solid rgba(0,0,0,0.2);
+      font-size: 12px; font-family: 'Manrope', system-ui, sans-serif;
+      background: transparent; color: #6b7280; cursor: pointer; transition: all 0.15s;
+    }
+    .cr-tab.active { background: #1a1a1a; color: #fff; border-color: transparent; }
+    .cr-tab:hover:not(.active) { background: #f3f4f6; }
+
+    /* Info boxes */
+    .cr-info-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .cr-box {
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .cr-box.red    { background: #fef2f2; border: 1px solid #fca5a5; }
+    .cr-box.orange { background: #fff7ed; border: 1px solid #fdba74; }
+    .cr-box.green  { background: #f0fdf4; border: 1px solid #86efac; }
+    .cr-box-header { display: flex; align-items: center; gap: 8px; }
+    .cr-icon {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; color: white;
+    }
+    .cr-icon.red    { background: #ef4444; }
+    .cr-icon.orange { background: #f97316; }
+    .cr-icon.green  { background: #22c55e; }
+    .cr-box-title { font-weight: 700; font-size: 13px; }
+    .cr-box-title.red    { color: #ef4444; }
+    .cr-box-title.orange { color: #f97316; }
+    .cr-box-title.green  { color: #22c55e; }
+    .cr-box-body { font-size: 13px; color: #444; line-height: 1.6; }
+    .cr-hl.red    { color: #ef4444; font-weight: 700; }
+    .cr-hl.orange { color: #f97316; font-weight: 700; }
+    .cr-hl.green  { color: #22c55e; font-weight: 700; }
+
+    @media (max-width: 640px) { .cr-info-row { grid-template-columns: 1fr; } }
+  </style>
+
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <p class="cr-label">Inspection risk by business category</p>
+    <h2>Which types of businesses fail most often?</h2>
+    <p class="cr-subtitle">
       Relative risk of receiving a serious inspection outcome (score 3 or 4) compared to the overall average.
-      A value above 1× means higher risk than average.
+      A value above 1× means higher risk than average. Click a tab or a bar to drill into a category.
     </p>
 
-    <iframe
-      src="figures/inspection_risk_chart.html"
-      style="width: 100%; height: 540px; border: none; border-radius: 12px; display: block;"
-      loading="lazy"
-      title="Inspection risk by business category"
-    ></iframe>
+    <div class="cr-tabs">
+      <button class="cr-tab active" onclick="crTab(this,'all')">All categories</button>
+      <button class="cr-tab" onclick="crTab(this,'Production &amp; Manufacturing')">Production</button>
+      <button class="cr-tab" onclick="crTab(this,'Restaurants &amp; Food Service')">Restaurants</button>
+      <button class="cr-tab" onclick="crTab(this,'Retail &amp; Shops')">Retail &amp; Shops</button>
+      <button class="cr-tab" onclick="crTab(this,'Storage, Logistics &amp; Transport')">Storage &amp; Logistics</button>
+      <button class="cr-tab" onclick="crTab(this,'Specialized / High-risk Regulated')">Specialized</button>
+      <button class="cr-tab" onclick="crTab(this,'Wholesale &amp; Food Contact Materials')">Wholesale</button>
+    </div>
 
+    <div id="cr-chart"></div>
+
+    <div style="text-align:center; font-size:12px; color:#737373; margin-top:4px; font-family:'Manrope',system-ui,sans-serif;">
+      Relative risk compared with average
+    </div>
+    <div style="font-size:11px; color:#9ca3af; font-style:italic; margin-top:6px; font-family:'Manrope',system-ui,sans-serif;">
+      Risk = share of inspections with score 3 or 4 (Injunction or Serious). Based on 165,102 inspections.
+    </div>
+
+    <div class="cr-info-row">
+      <div class="cr-box red">
+        <div class="cr-box-header">
+          <div class="cr-icon red">&#8599;</div>
+          <span class="cr-box-title red">Highest risk</span>
+        </div>
+        <div class="cr-box-body">
+          Retail &amp; Shops are <span class="cr-hl red">1.43&times;</span> more likely
+          than the average business to receive a severe inspection outcome.
+        </div>
+      </div>
+      <div class="cr-box orange">
+        <div class="cr-box-header">
+          <div class="cr-icon orange">&#9651;</div>
+          <span class="cr-box-title orange">Above average</span>
+        </div>
+        <div class="cr-box-body">
+          Specialized / High-risk Regulated businesses are
+          <span class="cr-hl orange">1.21&times;</span> more likely than the average.
+        </div>
+      </div>
+      <div class="cr-box green">
+        <div class="cr-box-header">
+          <div class="cr-icon green">&#8600;</div>
+          <span class="cr-box-title green">Lowest risk</span>
+        </div>
+        <div class="cr-box-body">
+          Wholesale &amp; Food Contact Materials businesses are
+          <span class="cr-hl green">0.29&times;</span> the average risk — the safest category.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb; font-family:'Manrope',system-ui,sans-serif;">
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
+        Business category explains a lot. But "Restaurants &amp; Food Service" is the single largest group —
+        over 20,000 locations. Does it matter <em>what kind</em> of restaurant it is?
+        Is a pizza place riskier than a sushi bar? Let's look closer.
+      </p>
+    </div>
   </div>
+
+  <script>
+  (function () {
+    // Load Plotly from CDN if not already present, then init chart
+    function run() {
+      if (typeof Plotly === 'undefined') {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+        s.onload = initChart;
+        document.head.appendChild(s);
+      } else {
+        initChart();
+      }
+    }
+
+    function initChart() {
+    var FONT = 'Manrope, Arial, sans-serif';
+    var BG   = '#fafaf9';
+
+    var overviewData = [{
+      type: 'bar', orientation: 'h', cliponaxis: false, constraintext: 'none',
+      x: [0.29, 0.82, 0.89, 0.90, 1.21, 1.43],
+      y: ['Wholesale & Food Contact Materials','Storage, Logistics & Transport',
+          'Restaurants & Food Service','Production & Manufacturing',
+          'Specialized / High-risk Regulated','Retail & Shops'],
+      marker: { color: ['rgba(34,197,94,0.55)','rgba(34,197,94,0.75)','rgba(34,197,94,0.75)',
+                        'rgba(34,197,94,0.75)','rgba(249,115,22,0.75)','rgba(239,68,68,0.75)'],
+                line: { width: 0 } },
+      text: ['  0.29x','  0.82x','  0.89x','  0.90x','  1.21x','  1.43x'],
+      textposition: 'outside',
+      textfont: { size: 13, family: FONT,
+                  color: ['rgba(34,197,94,0.55)','rgba(34,197,94,0.75)','rgba(34,197,94,0.75)',
+                          'rgba(34,197,94,0.75)','rgba(249,115,22,0.75)','rgba(239,68,68,0.75)'] },
+      customdata: [
+        '<b>Wholesale & Food Contact Materials</b><br>Relative risk: <b>0.29x</b><br><b>71% less likely</b> than average',
+        '<b>Storage, Logistics & Transport</b><br>Relative risk: <b>0.82x</b><br><b>18% less likely</b> than average',
+        '<b>Restaurants & Food Service</b><br>Relative risk: <b>0.89x</b><br><b>11% less likely</b> than average',
+        '<b>Production & Manufacturing</b><br>Relative risk: <b>0.90x</b><br><b>10% less likely</b> than average',
+        '<b>Specialized / High-risk Regulated</b><br>Relative risk: <b>1.21x</b><br><b>21% more likely</b> than average',
+        '<b>Retail & Shops</b><br>Relative risk: <b>1.43x</b><br><b>43% more likely</b> than average',
+      ],
+      hovertemplate: '%{customdata}<extra></extra>',
+    }];
+
+    var details = {"Production & Manufacturing": {"y": ["Production of animal products - Fish and shellfish", "Production of beverages", "Production of animal products - Milk and cheese", "Production of vegetable products (incl. mixed content)", "Production of dietary supplements and additives", "Slaughterhouses", "Production of animal products - Meat"], "x": [0.4, 0.44, 0.84, 0.97, 1.26, 1.28, 1.49], "colors": ["rgba(34,197,94,0.55)", "rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)", "rgba(249,115,22,0.75)", "rgba(249,115,22,0.75)", "rgba(239,68,68,0.75)"], "hover": ["<b>Production of animal products - Fish and shellfish</b><br>Relative risk: <b>0.40x</b><br>Inspections: 800", "<b>Production of beverages</b><br>Relative risk: <b>0.44x</b><br>Inspections: 914", "<b>Production of animal products - Milk and cheese</b><br>Relative risk: <b>0.84x</b><br>Inspections: 386", "<b>Production of vegetable products (incl. mixed content)</b><br>Relative risk: <b>0.97x</b><br>Inspections: 1,831", "<b>Production of dietary supplements and additives</b><br>Relative risk: <b>1.26x</b><br>Inspections: 385", "<b>Slaughterhouses</b><br>Relative risk: <b>1.28x</b><br>Inspections: 314", "<b>Production of animal products - Meat</b><br>Relative risk: <b>1.49x</b><br>Inspections: 540"]}, "Restaurants & Food Service": {"y": ["Catering with delivery to retail businesses", "Food service - Institutional kitchens", "Food service - Restaurants", "Food service - No food processing"], "x": [0.22, 0.47, 1.07, 1.37], "colors": ["rgba(34,197,94,0.55)", "rgba(34,197,94,0.75)", "rgba(249,115,22,0.75)", "rgba(239,68,68,0.75)"], "hover": ["<b>Catering with delivery to retail businesses</b><br>Relative risk: <b>0.22x</b><br>Inspections: 1,495", "<b>Food service - Institutional kitchens</b><br>Relative risk: <b>0.47x</b><br>Inspections: 30,856", "<b>Food service - Restaurants</b><br>Relative risk: <b>1.07x</b><br>Inspections: 64,667", "<b>Food service - No food processing</b><br>Relative risk: <b>1.37x</b><br>Inspections: 5,356"]}, "Retail & Shops": {"y": ["Specialty shop - Delicatessen and specialties", "Specialty shop - Fish", "Specialty shop - Butcher", "Grocery store (with or without limited processing)", "Specialty shop - Bakery"], "x": [0.8, 0.85, 0.91, 1.61, 1.67], "colors": ["rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)", "rgba(239,68,68,0.75)", "rgba(239,68,68,0.75)"], "hover": ["<b>Specialty shop - Delicatessen and specialties</b><br>Relative risk: <b>0.80x</b><br>Inspections: 4,536", "<b>Specialty shop - Fish</b><br>Relative risk: <b>0.85x</b><br>Inspections: 1,140", "<b>Specialty shop - Butcher</b><br>Relative risk: <b>0.91x</b><br>Inspections: 3,621", "<b>Grocery store (with or without limited processing)</b><br>Relative risk: <b>1.61x</b><br>Inspections: 25,516", "<b>Specialty shop - Bakery</b><br>Relative risk: <b>1.67x</b><br>Inspections: 3,820"]}, "Specialized / High-risk Regulated": {"y": ["Office or agency business - No warehouse"], "x": [1.24], "colors": ["rgba(249,115,22,0.75)"], "hover": ["<b>Office or agency business - No warehouse</b><br>Relative risk: <b>1.24x</b><br>Inspections: 3,759"]}, "Storage, Logistics & Transport": {"y": ["Transport company - Wholesale", "Warehouse and wholesale with retail sales", "Warehouse / storage hotel without refrigeration", "Warehouse / storage hotel with refrigeration or freezing", "Cold store with freezing of animal products"], "x": [0.25, 0.46, 1.04, 1.09, 1.43], "colors": ["rgba(34,197,94,0.55)", "rgba(34,197,94,0.75)", "rgba(249,115,22,0.75)", "rgba(249,115,22,0.75)", "rgba(239,68,68,0.75)"], "hover": ["<b>Transport company - Wholesale</b><br>Relative risk: <b>0.25x</b><br>Inspections: 2,247", "<b>Warehouse and wholesale with retail sales</b><br>Relative risk: <b>0.46x</b><br>Inspections: 705", "<b>Warehouse / storage hotel without refrigeration</b><br>Relative risk: <b>1.04x</b><br>Inspections: 4,802", "<b>Warehouse / storage hotel with refrigeration or freezing</b><br>Relative risk: <b>1.09x</b><br>Inspections: 1,476", "<b>Cold store with freezing of animal products</b><br>Relative risk: <b>1.43x</b><br>Inspections: 113"]}, "Wholesale & Food Contact Materials": {"y": ["Production of food contact materials - Wholesale", "Marketing of food contact materials - Wholesale", "Production of food contact materials - Retail", "Marketing of food contact materials - Retail"], "x": [0.07, 0.41, 0.41, 0.98], "colors": ["rgba(34,197,94,0.55)", "rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)", "rgba(34,197,94,0.75)"], "hover": ["<b>Production of food contact materials - Wholesale</b><br>Relative risk: <b>0.07x</b><br>Inspections: 2,454", "<b>Marketing of food contact materials - Wholesale</b><br>Relative risk: <b>0.41x</b><br>Inspections: 2,541", "<b>Production of food contact materials - Retail</b><br>Relative risk: <b>0.41x</b><br>Inspections: 199", "<b>Marketing of food contact materials - Retail</b><br>Relative risk: <b>0.98x</b><br>Inspections: 328"]}};
+
+    function makeLayout(nBars, title) {
+      return {
+        autosize: true,
+        height: Math.max(320, nBars * 52 + 80),
+        margin: { l: 240, r: 80, t: title ? 30 : 20, b: 40 },
+        paper_bgcolor: BG, plot_bgcolor: BG,
+        showlegend: false,
+        bargap: 0.38,
+        font: { family: FONT, color: '#1a1a1a' },
+        hoverlabel: { bgcolor: 'white', bordercolor: '#e5e5e5',
+                      font: { size: 13, family: FONT } },
+        shapes: [{ type: 'line', x0: 1, x1: 1, xref: 'x',
+                   y0: 0, y1: 1, yref: 'y domain',
+                   line: { color: '#a3a3a3', dash: 'dash', width: 1.5 } }],
+        annotations: [{ text: 'Average', x: 1, xref: 'x', xanchor: 'center',
+                         y: 1, yref: 'y domain', yanchor: 'bottom',
+                         showarrow: false,
+                         font: { color: '#737373', size: 11, family: FONT } }],
+        xaxis: { range: [0, 2.35], dtick: 0.2, fixedrange: true,
+                 gridcolor: '#e5e5e5', zeroline: false, showline: false,
+                 tickfont: { size: 12, color: '#737373', family: FONT },
+                 ticksuffix: 'x' },
+        yaxis: { fixedrange: true, automargin: false,
+                 tickfont: { size: 12, color: '#1a1a1a', family: FONT } },
+      };
+    }
+
+    var config = { responsive: true, displayModeBar: false };
+
+    Plotly.newPlot('cr-chart', overviewData, makeLayout(6), config);
+
+    document.getElementById('cr-chart').on('plotly_click', function(e) {
+      var group = e.points[0].y;
+      if (!details[group]) return;
+      document.querySelectorAll('.cr-tab').forEach(t => {
+        var cat = t.getAttribute('onclick').match(/'([^']+)'/g);
+        t.classList.toggle('active', cat && cat[1] && cat[1].replace(/'/g,'') === group);
+      });
+      showDetail(group);
+    });
+
+    function showDetail(group) {
+      var sub = details[group];
+      var trace = {
+        type: 'bar', orientation: 'h', cliponaxis: false, constraintext: 'none',
+        x: sub.x, y: sub.y,
+        marker: { color: sub.colors, line: { width: 0 } },
+        text: sub.x.map(v => '  ' + v.toFixed(2) + 'x'),
+        textposition: 'outside',
+        textfont: { size: 12, color: sub.colors, family: FONT },
+        customdata: sub.hover,
+        hovertemplate: '%{customdata}<extra></extra>',
+      };
+      var layout = makeLayout(sub.y.length);
+      layout.xaxis.range = [0, Math.max(2.35, Math.max(...sub.x) + 0.45)];
+      Plotly.react('cr-chart', [trace], layout, config);
+    }
+
+    window.crTab = function(btn, cat) {
+      document.querySelectorAll('.cr-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      if (cat === 'all') {
+        Plotly.react('cr-chart', overviewData, makeLayout(6), config);
+      } else {
+        showDetail(cat);
+      }
+    };
+    } // end initChart
+
+    run();
+  })();
+  </script>
 </section>

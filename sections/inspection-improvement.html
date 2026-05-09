@@ -1,4 +1,4 @@
-<section id="inspection-improvement" style="padding: 3rem 1.5rem; max-width: 780px; margin: 0 auto; font-family: 'Manrope', system-ui, sans-serif;">
+<section id="inspection-improvement" style="padding: 3rem 1.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
 
   <style>
     #inspection-improvement *,
@@ -6,6 +6,7 @@
     #inspection-improvement *::after { box-sizing: border-box; }
 
     #inspection-improvement h2 {
+      font-family: var(--font-display, 'Playfair Display', serif);
       font-size: clamp(1.4rem, 4vw, 2rem);
       font-weight: 700;
       line-height: 1.25;
@@ -101,18 +102,20 @@
     }
   </style>
 
+  <div style="max-width: 960px; margin: 0 auto;">
+
   <h2>Do businesses improve after a bad inspection?</h2>
   <p class="ii-subtitle">
     Tracking what happened at the <em>next</em> visit for every business that received
-    a Grade 2, 3, or 4 from the Danish Veterinary and Food Administration.
+    a Score 2, 3, or 4 from the Danish Veterinary and Food Administration.
   </p>
 
   <p class="ii-section-label">After a bad inspection — what happened next?</p>
 
   <div class="ii-tabs">
-    <button class="ii-tab active" onclick="iiSetGrade(0)">Grade 2</button>
-    <button class="ii-tab" onclick="iiSetGrade(1)">Grade 3</button>
-    <button class="ii-tab" onclick="iiSetGrade(2)">Grade 4</button>
+    <button class="ii-tab active" onclick="iiSetGrade(0)">Score 2</button>
+    <button class="ii-tab" onclick="iiSetGrade(1)">Score 3</button>
+    <button class="ii-tab" onclick="iiSetGrade(2)">Score 4</button>
   </div>
 
   <div class="ii-flow-wrap">
@@ -161,9 +164,9 @@
   <script>
     (function () {
       const grades = [
-        { label:'Grade 2', n:11039, bg:'#FEF9C3', color:'#854D0E', border:'#FDE047', fixed:9878,  improved:0,  worse:1161 },
-        { label:'Grade 3', n:327,   bg:'#FFEDD5', color:'#9A3412', border:'#FB923C', fixed:262,   improved:13, worse:52   },
-        { label:'Grade 4', n:1606,  bg:'#FEE2E2', color:'#991B1B', border:'#FCA5A5', fixed:1373,  improved:85, worse:148  },
+        { label:'Score 2', n:11039, bg:'#FEF9C3', color:'#854D0E', border:'#FDE047', fixed:9878,  improved:0,  worse:1161 },
+        { label:'Score 3', n:327,   bg:'#FFEDD5', color:'#9A3412', border:'#FB923C', fixed:262,   improved:13, worse:52   },
+        { label:'Score 4', n:1606,  bg:'#FEE2E2', color:'#991B1B', border:'#FCA5A5', fixed:1373,  improved:85, worse:148  },
       ];
       const overall = { fixed: 11513, improved: 98, worse: 1361, total: 12972 };
       const COLORS  = { fixed:'#4ade80', improved:'#fbbf24', worse:'#f87171' };
@@ -286,4 +289,13 @@
     })();
   </script>
 
+  <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
+    <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
+      So businesses improve, and the enforcement cycle works. One last angle remains:
+      does it matter <em>where</em> in Denmark a business is located? Are failed inspections
+      clustered in specific cities or postal codes, or spread evenly across the country?
+    </p>
+  </div>
+
+  </div><!-- /max-width wrapper -->
 </section>

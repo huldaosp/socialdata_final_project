@@ -1,26 +1,116 @@
-<section class="section" id="conclusion">
-    <div class="section-content">
-        <h2>Conclusion</h2>
-        <p>Danish restaurants demonstrate strong commitment to food safety standards.</p>
-        <div style="display: flex; justify-content: center; gap: 2rem; margin: 3rem 0;">
-            <div style="text-align: center;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
-                <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--smiley-happy); margin-bottom: 0.5rem;">High Standards</h3>
-                <p style="font-size: 0.9rem; color: var(--muted-foreground);">78% satisfactory ratings</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
-                <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--smiley-neutral); margin-bottom: 0.5rem;">Improving</h3>
-                <p style="font-size: 0.9rem; color: var(--muted-foreground);">15% improvement in 2 years</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
-                <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--foreground); margin-bottom: 0.5rem;">Reliable</h3>
-                <p style="font-size: 0.9rem; color: var(--muted-foreground);">Consistent enforcement</p>
-            </div>
+<section id="conclusion" style="padding: 3rem 1.5rem 4rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
+  <style>
+    #conclusion * { box-sizing: border-box; }
+
+    .cncl-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9ca3af; margin-bottom: 0.75rem;
+    }
+    #conclusion h2 {
+      font-family: var(--font-display, 'Playfair Display', serif);
+      font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700;
+      color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;
+    }
+    .cncl-lead {
+      font-size: 16px; color: #374151; line-height: 1.8;
+      max-width: 680px; margin-bottom: 2rem;
+    }
+    .cncl-body {
+      font-size: 15px; color: #6b7280; line-height: 1.8;
+      max-width: 680px; margin-bottom: 1.25rem;
+    }
+    .cncl-points {
+      display: flex; flex-direction: column; gap: 1rem;
+      max-width: 680px; margin-bottom: 2rem; margin-top: 1.5rem;
+    }
+    .cncl-point {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .cncl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 7px;
+    }
+    .cncl-point-text { font-size: 15px; color: #374151; line-height: 1.7; }
+    .cncl-point-text strong { color: #1a1a1a; }
+    .cncl-callout {
+      background: white; border: 1px solid #e5e7eb; border-radius: 10px;
+      padding: 1.25rem 1.5rem; max-width: 680px; margin-bottom: 2rem;
+    }
+    .cncl-callout-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9ca3af; margin-bottom: 0.5rem;
+    }
+    .cncl-callout-text {
+      font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .cncl-source {
+      font-size: 12px; color: #9ca3af; padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb; max-width: 680px;
+    }
+  </style>
+
+  <div style="max-width: 960px; margin: 0 auto;">
+    <p class="cncl-label">Takeaways</p>
+    <h2>What the data tells us</h2>
+
+    <p class="cncl-lead">
+      Denmark's food safety system — built around the public Smiley scheme and regular unannounced inspections — produces a broadly reassuring picture. Across 165,478 inspection records and 51,715 unique businesses, the vast majority pass cleanly. But looking below the surface reveals where the risk actually concentrates, what kind of businesses struggle most, and how effectively the system corrects problems when they arise.
+    </p>
+
+    <p class="cncl-body">
+      The headline number is striking: <strong style="color:#1a1a1a;">97.9% of businesses receive a Score 1 on their most recent inspection</strong> — no remarks, nothing to fix. That is a high baseline. It tells you that routine enforcement is working, and that most food businesses in Denmark take compliance seriously. The Smiley score displayed on every restaurant window and shop door creates real accountability: a visible, public signal that has shaped behaviour across the industry over the past decade.
+    </p>
+
+    <p class="cncl-body">
+      But that average masks a lot of variation. The single strongest predictor of a bad inspection is not where a business is located — it is <em>what kind of business it is</em>. Retail shops and grocery stores are consistently among the highest-risk categories, while wholesale distributors and food contact material companies sit far below average. Within restaurants specifically, the type of cuisine served correlates with inspection outcomes too — though that analysis carries an important caveat, since cuisines are identified from business names rather than any official register.
+    </p>
+
+    <div class="cncl-points">
+      <div class="cncl-point">
+        <div class="cncl-dot" style="background:#22c55e;"></div>
+        <div class="cncl-point-text">
+          <strong>The system broadly works.</strong> 97.9% of all active businesses pass their most recent inspection with no remarks. The enforcement infrastructure — inspections, public scores, re-inspections — is functioning at scale.
         </div>
-        <p style="font-style: italic; color: var(--muted-foreground); margin-top: 2rem;">
-            Data source: Danish Veterinary and Food Administration (2022-2024)
-        </p>
+      </div>
+      <div class="cncl-point">
+        <div class="cncl-dot" style="background:#f97316;"></div>
+        <div class="cncl-point-text">
+          <strong>Business type is the dominant risk factor.</strong> Retail &amp; Shops are 43% more likely than the average business to receive a serious outcome. Wholesale and food contact businesses are consistently the safest. Geography matters far less than what you sell.
+        </div>
+      </div>
+      <div class="cncl-point">
+        <div class="cncl-dot" style="background:#f97316;"></div>
+        <div class="cncl-point-text">
+          <strong>Within restaurants, cuisine type adds nuance.</strong> Indian, Mexican, Thai, and Kebab restaurants all show risk levels of 1.8× or more above the restaurant average, while Chinese and Sushi/Japanese restaurants sit below it. This should be read as exploratory — the classification is name-based, not from an official register.
+        </div>
+      </div>
+      <div class="cncl-point">
+        <div class="cncl-dot" style="background:#22c55e;"></div>
+        <div class="cncl-point-text">
+          <strong>Large operators tend to lead on compliance.</strong> Among the twelve operators with the most locations in Denmark, nine achieved a 100% clean record across every branch on their most recent inspection. Scale brings systems, training, and resources — and it shows up in the data.
+        </div>
+      </div>
+      <div class="cncl-point">
+        <div class="cncl-dot" style="background:#22c55e;"></div>
+        <div class="cncl-point-text">
+          <strong>Getting caught tends to lead to improvement.</strong> Of the 12,972 businesses that received a Score 2, 3, or 4 at one inspection, 88.8% had fully resolved the issue by their next visit. The enforcement cycle is not just punitive — it is corrective.
+        </div>
+      </div>
     </div>
+
+    <div class="cncl-callout">
+      <div class="cncl-callout-label">A note on what this data cannot tell us</div>
+      <div class="cncl-callout-text">
+        The Smiley dataset stores only the four most recent inspections per business, which means long-running businesses have a shorter visible history than their actual record. Businesses that have closed are not always visible in the data. The cuisine classification is name-based and imprecise — a restaurant called "Indian Kitchen" is flagged as Indian; one called "Taj" is not. And relative risk figures compare groups to each other, but do not tell you anything about <em>why</em> certain types of businesses struggle more — that would require talking to inspectors, business owners, and regulators. The data shows the pattern. The explanation for it lies elsewhere.
+      </div>
+    </div>
+
+    <p class="cncl-body">
+      What stands out most, stepping back from the individual findings, is how functional and transparent this system is. The Smiley scheme is public, searchable, and updated regularly. The data used here is openly available through Fødevarestyrelsen's API. That kind of institutional openness makes analyses like this possible — and makes it harder for problems to persist unnoticed. Whether you are a consumer choosing where to eat, a business owner benchmarking against competitors, or a regulator allocating inspection resources, the data is there to be used.
+    </p>
+
+    <div class="cncl-source">
+      Data: Fødevarestyrelsen (Danish Veterinary and Food Administration) — Smiley inspection database, 2012–2026.
+    </div>
+  </div>
 </section>

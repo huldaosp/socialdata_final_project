@@ -1,134 +1,64 @@
-// Simple JavaScript for the simplified website
-// Inspired by the original project's interactive elements
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons
+document.addEventListener('DOMContentLoaded', function () {
     lucide.createIcons();
-
-    // Load sections dynamically
     loadSections();
 
-    // Smooth scrolling for navigation (if you add navigation later)
-    const scrollIndicator = document.querySelector('.scroll-arrow');
+    // Scroll progress bar
+    var bar = document.createElement('div');
+    bar.style.cssText = 'position:fixed;top:0;left:0;width:0%;height:3px;background:var(--smiley-happy);z-index:1000;transition:width 0.1s ease;';
+    document.body.appendChild(bar);
 
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
-            const nextSection = document.querySelector('.section');
-            if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth' });
-            }
+    window.addEventListener('scroll', function () {
+        var pct = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+        bar.style.width = pct + '%';
+    });
+
+    // Scroll arrow
+    var arrow = document.querySelector('.scroll-arrow');
+    if (arrow) {
+        arrow.addEventListener('click', function () {
+            var first = document.getElementById('sections-container').firstElementChild;
+            if (first) first.scrollIntoView({ behavior: 'smooth' });
         });
     }
-
-    // Simple scroll progress indicator (inspired by ScrollProgress component)
-    const hero = document.querySelector('.hero');
-    let progressBar = null;
-
-    function createProgressBar() {
-        progressBar = document.createElement('div');
-        progressBar.style.position = 'fixed';
-        progressBar.style.top = '0';
-        progressBar.style.left = '0';
-        progressBar.style.width = '0%';
-        progressBar.style.height = '3px';
-        progressBar.style.backgroundColor = 'var(--smiley-happy)';
-        progressBar.style.zIndex = '1000';
-        progressBar.style.transition = 'width 0.1s ease';
-        document.body.appendChild(progressBar);
-    }
-
-    function updateProgress() {
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        if (progressBar) {
-            progressBar.style.width = scrollPercent + '%';
-        }
-    }
-
-    createProgressBar();
-    window.addEventListener('scroll', updateProgress);
 });
 
-// Function to load sections from separate HTML files
 async function loadSections() {
-    const container = document.getElementById('sections-container');
-    const sections = [
-        'sections/key-findings.html',
-        'sections/inspection-improvement.html',
-        'sections/category-risk.html',
-        'sections/failed-inspections-map.html',
+    var container = document.getElementById('sections-container');
+    var sections = [
         'sections/methodology.html',
+        'sections/category-risk.html',
+        'sections/cuisine-risk.html',
+        'sections/chain-branches.html',
+        'sections/inspection-improvement.html',
+        'sections/failed-inspections-map.html',
         'sections/conclusion.html',
     ];
 
-    for (const file of sections) {
+    for (var file of sections) {
         try {
-            const response = await fetch(file);
-            if (!response.ok) { console.warn(`Failed to load: ${file}`); continue; }
-            const html = await response.text();
+            var res = await fetch(file);
+            if (!res.ok) { console.warn('Failed to load:', file); continue; }
 
-            // Inject HTML
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = html;
+            var wrapper = document.createElement('div');
+            wrapper.innerHTML = await res.text();
 
-            // Re-execute <script> tags (innerHTML doesn't run them)
-            wrapper.querySelectorAll('script').forEach(old => {
-                const s = document.createElement('script');
+            // innerHTML doesn't execute scripts — re-create and append them
+            wrapper.querySelectorAll('script').forEach(function (old) {
+                var s = document.createElement('script');
                 if (old.src) s.src = old.src; else s.textContent = old.textContent;
                 wrapper.appendChild(s);
                 old.remove();
             });
 
             container.appendChild(wrapper);
-        } catch (error) {
-            console.warn(`Error loading ${file}:`, error);
+        } catch (e) {
+            console.warn('Error loading ' + file + ':', e);
         }
     }
 
-    setTimeout(initializeAnimations, 100);
-}
-
-// Function to initialize animations for dynamically loaded content
-function initializeAnimations() {
-    // Add intersection observer for fade-in animations (similar to original)
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Apply fade-in animation to sections
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        if (!alreadyVisible) {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        }
-        observer.observe(section);
-    });
-
-    // Add hover effects to only the hero smileys
-    const smileys = document.querySelectorAll('.hero .smiley');
-    smileys.forEach(smiley => {
-        smiley.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1)';
-            this.style.transition = 'transform 0.2s ease';
-        });
-
-        smiley.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
+    // Hover effect on hero smileys (runs after DOM is ready)
+    document.querySelectorAll('.hero .smiley').forEach(function (el) {
+        el.addEventListener('mouseenter', function () { el.style.transform = 'scale(1.1)'; el.style.transition = 'transform 0.2s ease'; });
+        el.addEventListener('mouseleave', function () { el.style.transform = 'scale(1)'; });
     });
 }

@@ -1,0 +1,254 @@
+<section id="cuisine-risk" style="padding: 3rem 1.5rem 2.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
+  <style>
+    #cuisine-risk * { box-sizing: border-box; }
+
+    .cu-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9ca3af; margin-bottom: 0.75rem;
+    }
+    #cuisine-risk h2 {
+      font-family: var(--font-display, 'Playfair Display', serif);
+      font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700;
+      color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;
+    }
+    .cu-subtitle {
+      font-size: 15px; color: #6b7280; line-height: 1.6;
+      margin-bottom: 1.25rem; max-width: 640px;
+    }
+
+    /* Disclaimer box */
+    .cu-disclaimer {
+      background: #fffbeb; border: 1px solid #fde68a;
+      border-radius: 10px; padding: 12px 16px;
+      margin-bottom: 1.5rem; max-width: 780px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .cu-disclaimer-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .cu-disclaimer-text { font-size: 12px; color: #92400e; line-height: 1.6; }
+    .cu-disclaimer-text strong { color: #78350f; }
+
+    /* Info boxes */
+    .cu-info-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .cu-box {
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .cu-box.red    { background: #fef2f2; border: 1px solid #fca5a5; }
+    .cu-box.green  { background: #f0fdf4; border: 1px solid #86efac; }
+    .cu-box.orange { background: #fff7ed; border: 1px solid #fdba74; }
+    .cu-box-header { display: flex; align-items: center; gap: 8px; }
+    .cu-icon {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; color: white;
+    }
+    .cu-icon.red    { background: #ef4444; }
+    .cu-icon.green  { background: #22c55e; }
+    .cu-icon.orange { background: #f97316; }
+    .cu-box-title { font-weight: 700; font-size: 13px; }
+    .cu-box-title.red    { color: #ef4444; }
+    .cu-box-title.green  { color: #16a34a; }
+    .cu-box-title.orange { color: #f97316; }
+    .cu-box-body { font-size: 13px; color: #444; line-height: 1.6; }
+    .cu-hl.red    { color: #ef4444; font-weight: 700; }
+    .cu-hl.green  { color: #16a34a; font-weight: 700; }
+    .cu-hl.orange { color: #f97316; font-weight: 700; }
+
+    @media (max-width: 640px) { .cu-info-row { grid-template-columns: 1fr; } }
+  </style>
+
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <p class="cu-label">Cuisine type — within restaurants</p>
+    <h2>Does the type of cuisine matter too?</h2>
+    <p class="cu-subtitle">
+      We focused on the restaurant category — over 20,000 locations — and asked: does the
+      <em>type</em> of food a restaurant serves predict its inspection outcome? To find out,
+      we looked at each restaurant's most recent inspection only, so every restaurant is
+      counted exactly once.
+    </p>
+
+    <div class="cu-disclaimer">
+      <span class="cu-disclaimer-icon">⚠</span>
+      <div class="cu-disclaimer-text">
+        <strong>How we classified cuisines — and why it is imprecise.</strong>
+        The dataset has no "cuisine type" column. Instead, we searched each restaurant's
+        name for keywords: a restaurant is counted as "Pizza" if the word <em>pizza</em>
+        appears in its name, "Indian" if <em>indian</em> appears, and so on. This works
+        reasonably well for some types — pizza and kebab restaurants almost always say so
+        in their name — but poorly for others. Many Italian restaurants do not say "Italian";
+        many Chinese restaurants do not say "Chinese." This means cuisines that <em>do</em>
+        use their cuisine name consistently (e.g. Indian) will appear larger and may show
+        inflated risk, simply because the sample is more complete. Treat these results
+        as exploratory, not definitive.
+        <br><br>
+        <strong>What "relative risk" means:</strong> we calculated what percentage of restaurants
+        in each group had any inspection issue (Score 2 or higher) at their most recent visit.
+        We then divided that by the overall restaurant average of 2.65%. A value of
+        <strong>1.0×</strong> = exactly average. <strong>2.0×</strong> = twice as likely
+        to have an issue as a typical restaurant. Restaurant counts are shown in brackets.
+      </div>
+    </div>
+
+    <div id="cu-chart"></div>
+
+    <div style="font-size:11px; color:#9ca3af; font-style:italic; margin-top:6px; font-family:'Manrope',system-ui,sans-serif;">
+      Each restaurant is counted exactly once using its most recent inspection only.
+      Relative risk = (share of that cuisine group with Score ≥ 2) ÷ (2.65% restaurant-wide average).
+      Only cuisines with ≥ 30 keyword-matched restaurants are shown. Cuisines identified by keyword in business name — see methodology note above.
+    </div>
+
+    <div class="cu-info-row">
+      <div class="cu-box red">
+        <div class="cu-box-header">
+          <div class="cu-icon red">&#8599;</div>
+          <span class="cu-box-title red">Highest observed risk</span>
+        </div>
+        <div class="cu-box-body">
+          Indian, Mexican, Thai, and Kebab restaurants all show
+          <span class="cu-hl red">≥1.8× the average risk</span> of any inspection issue —
+          though note the caveat on name-based classification above.
+        </div>
+      </div>
+      <div class="cu-box orange">
+        <div class="cu-box-header">
+          <div class="cu-icon orange">&#9651;</div>
+          <span class="cu-box-title orange">Close to average</span>
+        </div>
+        <div class="cu-box-body">
+          Burgers, cafés, Italian, and Vietnamese restaurants cluster around
+          <span class="cu-hl orange">1.1–1.4× the average</span> — elevated
+          but not dramatically so.
+        </div>
+      </div>
+      <div class="cu-box green">
+        <div class="cu-box-header">
+          <div class="cu-icon green">&#8600;</div>
+          <span class="cu-box-title green">Lowest observed risk</span>
+        </div>
+        <div class="cu-box-body">
+          Sushi/Japanese and Chinese restaurants perform
+          <span class="cu-hl green">below the restaurant average</span> — at 0.93× and 0.88×
+          respectively — and had zero serious (score 4) outcomes in this dataset.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
+        Cuisine type adds nuance within the restaurant world. But it's worth zooming out again:
+        how do the largest multi-location operators — the chains that run tens or hundreds of branches —
+        compare to each other? Scale should bring resources, training, and systems. Does it show up in the inspections?
+      </p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    function run() {
+      if (typeof Plotly === 'undefined') {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+        s.onload = initChart;
+        document.head.appendChild(s);
+      } else {
+        initChart();
+      }
+    }
+
+    function initChart() {
+      var FONT = 'Manrope, Arial, sans-serif';
+      var BG   = '#fafaf9';
+
+      // Ordered lowest → highest risk (bottom → top in chart)
+      var labels = [
+        'Chinese [86]',
+        'Sushi / Japanese [405]',
+        'Italian [68]',
+        'Vietnamese [33]',
+        'Café / Coffee [1,559]',
+        'Burger [444]',
+        'Pizza [1,376]',
+        'Kebab / Shawarma [418]',
+        'Thai [138]',
+        'Mexican [39]',
+        'Indian [100]',
+      ];
+      var values = [0.88, 0.93, 1.11, 1.14, 1.31, 1.36, 1.51, 1.81, 1.92, 1.94, 2.27];
+      var colors = [
+        'rgba(34,197,94,0.75)',   // Chinese
+        'rgba(34,197,94,0.75)',   // Sushi
+        'rgba(249,115,22,0.75)', // Italian
+        'rgba(249,115,22,0.75)', // Vietnamese
+        'rgba(249,115,22,0.75)', // Café
+        'rgba(249,115,22,0.75)', // Burger
+        'rgba(239,68,68,0.75)',  // Pizza
+        'rgba(239,68,68,0.75)',  // Kebab
+        'rgba(239,68,68,0.75)',  // Thai
+        'rgba(239,68,68,0.75)',  // Mexican
+        'rgba(239,68,68,0.75)',  // Indian
+      ];
+      var hover = [
+        '<b>Chinese</b><br>Relative risk: <b>0.88×</b><br>12% less likely than average<br>Restaurants matched: 86<extra></extra>',
+        '<b>Sushi / Japanese</b><br>Relative risk: <b>0.93×</b><br>7% less likely than average<br>Restaurants matched: 405<extra></extra>',
+        '<b>Italian</b><br>Relative risk: <b>1.11×</b><br>11% more likely than average<br>Restaurants matched: 68<extra></extra>',
+        '<b>Vietnamese</b><br>Relative risk: <b>1.14×</b><br>14% more likely than average<br>Restaurants matched: 33<extra></extra>',
+        '<b>Café / Coffee</b><br>Relative risk: <b>1.31×</b><br>31% more likely than average<br>Restaurants matched: 1,559<extra></extra>',
+        '<b>Burger</b><br>Relative risk: <b>1.36×</b><br>36% more likely than average<br>Restaurants matched: 444<extra></extra>',
+        '<b>Pizza</b><br>Relative risk: <b>1.51×</b><br>51% more likely than average<br>Restaurants matched: 1,376<extra></extra>',
+        '<b>Kebab / Shawarma</b><br>Relative risk: <b>1.81×</b><br>81% more likely than average<br>Restaurants matched: 418<extra></extra>',
+        '<b>Thai</b><br>Relative risk: <b>1.92×</b><br>92% more likely than average<br>Restaurants matched: 138<extra></extra>',
+        '<b>Mexican</b><br>Relative risk: <b>1.94×</b><br>94% more likely than average<br>Restaurants matched: 39<extra></extra>',
+        '<b>Indian</b><br>Relative risk: <b>2.27×</b><br>127% more likely than average<br>Restaurants matched: 100<extra></extra>',
+      ];
+
+      var trace = {
+        type: 'bar', orientation: 'h', cliponaxis: false, constraintext: 'none',
+        x: values, y: labels,
+        marker: { color: colors, line: { width: 0 } },
+        text: values.map(function(v) { return '  ' + v.toFixed(2) + '×'; }),
+        textposition: 'outside',
+        textfont: { size: 12, family: FONT, color: colors },
+        customdata: hover,
+        hovertemplate: '%{customdata}',
+      };
+
+      var layout = {
+        autosize: true,
+        height: 520,
+        margin: { l: 200, r: 80, t: 20, b: 40 },
+        paper_bgcolor: BG, plot_bgcolor: BG,
+        showlegend: false,
+        bargap: 0.38,
+        font: { family: FONT, color: '#1a1a1a' },
+        hoverlabel: { bgcolor: 'white', bordercolor: '#e5e5e5', font: { size: 13, family: FONT } },
+        shapes: [{
+          type: 'line', x0: 1, x1: 1, xref: 'x', y0: 0, y1: 1, yref: 'y domain',
+          line: { color: '#a3a3a3', dash: 'dash', width: 1.5 },
+        }],
+        annotations: [{
+          text: 'Restaurant average', x: 1, xref: 'x', xanchor: 'center',
+          y: 1, yref: 'y domain', yanchor: 'bottom', showarrow: false,
+          font: { color: '#737373', size: 11, family: FONT },
+        }],
+        xaxis: {
+          range: [0, 2.85], dtick: 0.2, fixedrange: true,
+          gridcolor: '#e5e5e5', zeroline: false, showline: false,
+          tickfont: { size: 12, color: '#737373', family: FONT },
+          ticksuffix: '×',
+        },
+        yaxis: {
+          fixedrange: true, automargin: false,
+          tickfont: { size: 12, color: '#1a1a1a', family: FONT },
+        },
+      };
+
+      Plotly.newPlot('cu-chart', [trace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    run();
+  })();
+  </script>
+</section>

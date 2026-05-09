@@ -1,23 +1,30 @@
-<section id="failed-inspections-map" style="padding: 3rem 1.5rem 2rem; font-family: 'Manrope', system-ui, sans-serif;">
+<section id="failed-inspections-map" style="padding: 3rem 1.5rem 2rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
   <div style="max-width: 960px; margin: 0 auto;">
 
     <p style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.75rem;">
       Failed inspections by postal code
     </p>
-    <h2 style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;">
+    <h2 style="font-family: var(--font-display, 'Playfair Display', serif); font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;">
       Where do bad inspections happen?
     </h2>
-    <p style="font-size: 15px; color: #6b7280; line-height: 1.6; margin-bottom: 1.75rem; max-width: 640px;">
-      Each postal code is coloured by the share of inspections that received a score worse than 1.
-      Use the dropdown to switch between score grades.
+    <p style="font-size: 15px; color: #6b7280; line-height: 1.6; margin-bottom: 1rem; max-width: 640px;">
+      Each postal code is coloured by how many more (or fewer) failed inspections it has compared to the national average.
+      Use the category buttons inside the map to filter by business type.
     </p>
 
     <iframe
-      src="sections/smiley_postnr_map.html"
-      style="width: 100%; height: 600px; border: none; border-radius: 12px; display: block;"
-      loading="lazy"
+      src="figures/map-postal-codes.html"
+      style="width: 100%; height: 650px; border: none; border-radius: 12px; display: block;"
       title="Failed inspections map by postal code"
     ></iframe>
+
+    <div style="margin-top:1.75rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:640px;">
+        Geography adds some texture — certain areas do show higher concentrations of failed inspections.
+        But zoomed out, the clearest signal is still the type of business, not the postcode.
+        So what does all of this add up to? Here's the takeaway.
+      </p>
+    </div>
 
   </div>
 </section>
