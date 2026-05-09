@@ -52,29 +52,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to load sections from separate HTML files
 async function loadSections() {
+    const container = document.getElementById('sections-container');
     const sections = [
-        { id: 'key-findings', file: 'sections/key-findings.html' },
-        { id: 'methodology', file: 'sections/methodology.html' },
-        { id: 'conclusion', file: 'sections/conclusion.html' }
+        'sections/key-findings.html',
+        'sections/inspection-improvement.html',
+        'sections/methodology.html',
+        'sections/conclusion.html',
     ];
 
-    for (const section of sections) {
+    for (const file of sections) {
         try {
-            const response = await fetch(section.file);
-            if (response.ok) {
-                const html = await response.text();
-                // Insert the section content before the script tag
-                const scriptTag = document.querySelector('script[src="script.js"]');
-                scriptTag.insertAdjacentHTML('beforebegin', html);
-            } else {
-                console.warn(`Failed to load section: ${section.file}`);
-            }
+            const response = await fetch(file);
+            if (!response.ok) { console.warn(`Failed to load: ${file}`); continue; }
+            const html = await response.text();
+
+            // Inject HTML
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = html;
+
+            // Re-execute <script> tags (innerHTML doesn't run them)
+            wrapper.querySelectorAll('script').forEach(old => {
+                const s = document.createElement('script');
+                if (old.src) s.src = old.src; else s.textContent = old.textContent;
+                wrapper.appendChild(s);
+                old.remove();
+            });
+
+            container.appendChild(wrapper);
         } catch (error) {
-            console.warn(`Error loading section ${section.file}:`, error);
+            console.warn(`Error loading ${file}:`, error);
         }
     }
 
-    // After loading sections, initialize animations
     setTimeout(initializeAnimations, 100);
 }
 
@@ -98,9 +107,13 @@ function initializeAnimations() {
     // Apply fade-in animation to sections
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        const rect = section.getBoundingClientRect();
+        const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!alreadyVisible) {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        }
         observer.observe(section);
     });
 
