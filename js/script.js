@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    lucide.createIcons();
+    try { lucide.createIcons(); } catch (e) { console.warn('Lucide failed:', e); }
     loadSections();
 
     // Scroll progress bar
@@ -36,8 +36,9 @@ async function loadSections() {
 
     for (var file of sections) {
         try {
+            console.log('Loading:', file);
             var res = await fetch(file);
-            if (!res.ok) { console.warn('Failed to load:', file); continue; }
+            if (!res.ok) { console.warn('Failed to load:', file, res.status); continue; }
 
             var wrapper = document.createElement('div');
             wrapper.innerHTML = await res.text();
@@ -51,10 +52,12 @@ async function loadSections() {
             });
 
             container.appendChild(wrapper);
+            console.log('Loaded OK:', file);
         } catch (e) {
-            console.warn('Error loading ' + file + ':', e);
+            console.error('Error loading ' + file + ':', e);
         }
     }
+    console.log('All sections done');
 
     // Hover effect on hero smileys (runs after DOM is ready)
     document.querySelectorAll('.hero .smiley').forEach(function (el) {
