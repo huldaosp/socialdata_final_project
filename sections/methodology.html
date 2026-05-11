@@ -1,4 +1,4 @@
-<section id="methodology" style="padding: 3rem 1.5rem 2.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
+<section id="methodology" style="padding: 3rem 1.5rem 2.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #edecea; border-top: 1px solid #d5d2ce; border-bottom: 1px solid #d5d2ce;">
   <style>
     #methodology * { box-sizing: border-box; }
 
@@ -15,94 +15,173 @@
       font-size: 15px; color: #6b7280; line-height: 1.6;
       margin-bottom: 2rem; max-width: 640px;
     }
+
+    /* Stat strip */
+    .mth-stats {
+      display: flex; align-items: center; gap: 0;
+      background: white; border: 1px solid #e5e7eb;
+      border-radius: 12px; padding: 1.25rem 1.75rem;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .mth-stat { flex: 1; min-width: 120px; text-align: center; padding: 0.25rem 0.75rem; }
+    .mth-stat-num {
+      display: block; font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700; color: #1a1a1a; letter-spacing: -0.02em;
+      font-family: var(--font-display, 'Playfair Display', serif);
+    }
+    .mth-stat-label { display: block; font-size: 12px; color: #9ca3af; margin-top: 2px; }
+    .mth-stat-divider { width: 1px; background: #e5e7eb; align-self: stretch; }
+
+    /* Two-col cards */
     .mth-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+      margin-bottom: 1.75rem;
     }
     .mth-card {
-      border-radius: 10px; padding: 1.25rem 1.25rem;
-      border: 1px solid #e5e7eb; background: white; min-width: 0;
+      border-radius: 10px; padding: 1.25rem 1.5rem;
+      border: 1px solid #e5e7eb; background: white;
     }
     .mth-card-title {
-      font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px;
+      font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px;
     }
-    .mth-card-body { font-size: 13px; color: #6b7280; line-height: 1.6; }
+    .mth-card-body { font-size: 13px; color: #6b7280; line-height: 1.65; }
+    .mth-card-body p + p { margin-top: 0.6rem; }
+    .mth-card-body ul { padding-left: 1.1rem; margin-top: 0.5rem; }
+    .mth-card-body li { margin-bottom: 3px; }
 
-    /* Score legend */
-    .mth-scores {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.75rem;
+    /* Score chips */
+    .mth-scores-title {
+      font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 0.75rem;
     }
-    .mth-score-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 12px; border-radius: 8px; font-size: 12px;
+    .mth-scores-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem;
     }
-    .mth-score-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .mth-score-chip {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 0.45rem 1rem 0.45rem 0.7rem;
+      border-radius: 99px; border: 1px solid;
+      cursor: default; transition: filter 0.15s;
+    }
+    .mth-score-chip:hover { filter: brightness(0.96); }
+    .mth-chip-icon { width: 20px; height: 20px; stroke-width: 1.75; flex-shrink: 0; display: block; }
+    .mth-chip-label { font-size: 13px; font-weight: 600; }
 
-    @media (max-width: 780px) { .mth-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 520px) { .mth-grid { grid-template-columns: 1fr; } }
+    /* Tooltip */
+    .mth-chip-tip {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%; transform: translateX(-50%) translateY(-4px);
+      background: #1c1c1c; color: #f3f4f6;
+      font-size: 12px; line-height: 1.5;
+      padding: 8px 12px; border-radius: 8px;
+      width: 190px; text-align: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+      z-index: 30; white-space: normal;
+    }
+    .mth-chip-tip::before {
+      content: '';
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-bottom-color: #1c1c1c;
+    }
+    .mth-score-chip:hover .mth-chip-tip {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 700px) {
+      .mth-grid { grid-template-columns: 1fr; }
+      .mth-stat-divider { display: none; }
+    }
   </style>
 
   <div style="max-width: 960px; margin: 0 auto;">
     <p class="mth-label">Data &amp; methods</p>
     <h2>How we did this analysis</h2>
     <p class="mth-subtitle">
-      All data comes from Fødevarestyrelsen — the Danish Veterinary and Food Administration —
-      which publishes inspection results publicly through the Smiley scheme.
+      All data originates from Fødevarestyrelsen — the Danish Veterinary and Food Administration —
+      which publishes food inspection results publicly through the Danish Smiley scheme.
     </p>
 
+    <!-- Key numbers -->
+    <div class="mth-stats">
+      <div class="mth-stat">
+        <span class="mth-stat-num">165,478</span>
+        <span class="mth-stat-label">inspection records</span>
+      </div>
+      <div class="mth-stat-divider"></div>
+      <div class="mth-stat">
+        <span class="mth-stat-num">51,715</span>
+        <span class="mth-stat-label">unique businesses</span>
+      </div>
+      <div class="mth-stat-divider"></div>
+      <div class="mth-stat">
+        <span class="mth-stat-num">2012–2025</span>
+        <span class="mth-stat-label">years covered</span>
+      </div>
+    </div>
+
+    <!-- Dataset + Scope cards -->
     <div class="mth-grid">
       <div class="mth-card">
-        <div class="mth-card-title">Dataset</div>
+        <div class="mth-card-title">The dataset</div>
         <div class="mth-card-body">
-          165,478 inspection records across 51,715 unique food businesses.
-          Each business can have up to 4 inspections stored — we used the full history
-          for trend analysis and the most recent inspection for snapshot comparisons.
+          <p>The dataset covers food establishments across Denmark — restaurants, cafés, bakeries, supermarkets, canteens, producers, and any other business handling food products.</p>
+          <p>Each record includes:</p>
+          <ul>
+            <li>Business category</li>
+            <li>Inspection date &amp; location</li>
+            <li>Inspection outcome (score 1–4)</li>
+          </ul>
+          <p>Each establishment stores up to four of its most recent inspections.</p>
         </div>
       </div>
       <div class="mth-card">
-        <div class="mth-card-title">Time period</div>
+        <div class="mth-card-title">Scope &amp; processing</div>
         <div class="mth-card-body">
-          Inspections from January 2012 through April 2026. The public dataset stores
-          at most four inspections per business — so for long-running businesses,
-          only the four most recent visits are available.
-        </div>
-      </div>
-      <div class="mth-card">
-        <div class="mth-card-title">Risk calculation</div>
-        <div class="mth-card-body">
-          Relative risk is the share of inspections with score 3 or 4 for a given group,
-          divided by the overall average. A value of 1.0× equals the average.
-          Values above 1.0× indicate higher-than-average risk of a serious outcome.
+          <p>Even though the oldest records date back to 2003, reliable digital Smiley reports were only consistently available across Denmark from 2012 onwards. Older records were excluded to avoid inconsistencies from the early rollout years.</p>
+          <p>The dataset originally included around 50 business categories. To make the analysis easier to understand and compare, these were grouped into <strong>7 broader business categories</strong> used throughout the analysis.</p>
         </div>
       </div>
     </div>
 
-    <p style="font-size:13px; font-weight:600; color:#374151; margin-top:1.75rem; margin-bottom:8px;">
-      The inspection score system
-    </p>
-    <div class="mth-scores">
-      <div class="mth-score-badge" style="background:#f0fdf4; border:1px solid #86efac;">
-        <div class="mth-score-dot" style="background:#22c55e;"></div>
-        <span style="color:#166534;"><strong>Score 1</strong> — No remarks</span>
+    <!-- Score chips with hover tooltips -->
+    <p class="mth-scores-title">The Danish Smiley inspection scores — hover to learn more</p>
+    <div class="mth-scores-row">
+
+      <div class="mth-score-chip" style="background:#f0fdf4; border-color:#86efac;">
+        <i data-lucide="laugh" class="mth-chip-icon" style="color:#16a34a;"></i>
+        <span class="mth-chip-label" style="color:#14532d;">Score 1 — No remarks</span>
+        <div class="mth-chip-tip">No violations detected. The business meets all food safety requirements.</div>
       </div>
-      <div class="mth-score-badge" style="background:#fefce8; border:1px solid #fde047;">
-        <div class="mth-score-dot" style="background:#eab308;"></div>
-        <span style="color:#854d0e;"><strong>Score 2</strong> — Minor remarks / Instruction</span>
+
+      <div class="mth-score-chip" style="background:#f0fdf4; border-color:#bbf7d0;">
+        <i data-lucide="smile" class="mth-chip-icon" style="color:#22c55e;"></i>
+        <span class="mth-chip-label" style="color:#14532d;">Score 2 — Minor issues</span>
+        <div class="mth-chip-tip">Small violations found that need correction, but no immediate risk to food safety.</div>
       </div>
-      <div class="mth-score-badge" style="background:#fff7ed; border:1px solid #fdba74;">
-        <div class="mth-score-dot" style="background:#f97316;"></div>
-        <span style="color:#9a3412;"><strong>Score 3</strong> — Injunction (must fix)</span>
+
+      <div class="mth-score-chip" style="background:#fefce8; border-color:#fde047;">
+        <i data-lucide="meh" class="mth-chip-icon" style="color:#ca8a04;"></i>
+        <span class="mth-chip-label" style="color:#713f12;">Score 3 — Injunction</span>
+        <div class="mth-chip-tip">Formal corrective orders issued by authorities. The business must act to resolve violations.</div>
       </div>
-      <div class="mth-score-badge" style="background:#fef2f2; border:1px solid #fca5a5;">
-        <div class="mth-score-dot" style="background:#ef4444;"></div>
-        <span style="color:#991b1b;"><strong>Score 4</strong> — Serious / Shutdown risk</span>
+
+      <div class="mth-score-chip" style="background:#fef2f2; border-color:#fca5a5;">
+        <i data-lucide="frown" class="mth-chip-icon" style="color:#ef4444;"></i>
+        <span class="mth-chip-label" style="color:#7f1d1d;">Score 4 — Serious violations</span>
+        <div class="mth-chip-tip">Severe food safety concerns or critical non-compliance. May result in closure.</div>
       </div>
+
     </div>
 
-    <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid #e5e7eb; max-width:680px;">
+    <div style="padding-top:1.5rem; border-top:1px solid #d5d2ce; max-width:680px;">
       <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic;">
         Now that we know what the data is and how scores work — what does it actually show?
         The next section gives a high-level overview before we start digging into the patterns.
       </p>
     </div>
   </div>
+
+  <script>try { lucide.createIcons(); } catch(e) {}</script>
 </section>

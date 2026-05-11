@@ -26,11 +26,11 @@ async function loadSections() {
     var container = document.getElementById('sections-container');
     var sections = [
         'sections/methodology.html',
+        'sections/failed-inspections-map.html',
         'sections/category-risk.html',
         'sections/cuisine-risk.html',
         'sections/chain-branches.html',
         'sections/inspection-improvement.html',
-        'sections/failed-inspections-map.html',
         'sections/conclusion.html',
     ];
 
