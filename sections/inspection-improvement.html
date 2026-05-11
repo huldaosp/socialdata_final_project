@@ -102,8 +102,11 @@
     }
   </style>
 
+  
   <div style="max-width: 960px; margin: 0 auto;">
-
+  <p style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.75rem;">
+      Follow-up Inspections
+    </p>
   <h2>Do businesses improve after a bad inspection?</h2>
   <p class="ii-subtitle">
     Tracking what happened at the <em>next</em> visit for every business that received
@@ -113,9 +116,15 @@
   <p class="ii-section-label">After a bad inspection — what happened next?</p>
 
   <div class="ii-tabs">
-    <button class="ii-tab active" onclick="iiSetGrade(0)">Score 2</button>
-    <button class="ii-tab" onclick="iiSetGrade(1)">Score 3</button>
-    <button class="ii-tab" onclick="iiSetGrade(2)">Score 4</button>
+    <button class="ii-tab active" onclick="iiSetGrade(0)">
+      <i data-lucide="smile" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;stroke-width:2;color:#22c55e;"></i>Score 2
+    </button>
+    <button class="ii-tab" onclick="iiSetGrade(1)">
+      <i data-lucide="meh" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;stroke-width:2;color:#eab308;"></i>Score 3
+    </button>
+    <button class="ii-tab" onclick="iiSetGrade(2)">
+      <i data-lucide="frown" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;stroke-width:2;color:#ef4444;"></i>Score 4
+    </button>
   </div>
 
   <div class="ii-flow-wrap">
@@ -171,6 +180,7 @@
       const overall = { fixed: 11513, improved: 98, worse: 1361, total: 12972 };
       const COLORS  = { fixed:'#4ade80', improved:'#fbbf24', worse:'#f87171' };
       const LABELS  = { fixed:'Fully fixed', improved:'Partially improved', worse:'Same or worse' };
+      const LABELS4 = { fixed:'Fully fixed', improved:'Partially improved', worse:'Same' };
 
       window.iiSetGrade = function(idx) {
         document.querySelectorAll('.ii-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
@@ -189,8 +199,9 @@
           `<span style="font-size:15px;font-weight:700;">${g.label}</span><br>` +
           `<span style="font-size:11px;font-weight:400;opacity:0.7">${g.n.toLocaleString()}<br>businesses</span>`;
 
+        const labels = idx === 2 ? LABELS4 : LABELS;
         const slices = ['fixed','improved','worse'].map(k => ({
-          key:k, pct:g[k]/total, color:COLORS[k], label:LABELS[k]
+          key:k, pct:g[k]/total, color:COLORS[k], label:labels[k]
         }));
 
         const W=400, H=260, srcWidth=60, gap=6;
@@ -286,16 +297,9 @@
 
       renderFlow(0);
       renderOverallDonut();
+      try { lucide.createIcons(); } catch(e) {}
     })();
   </script>
 
-  <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
-    <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
-      So businesses improve, and the enforcement cycle works. One last angle remains:
-      does it matter <em>where</em> in Denmark a business is located? Are failed inspections
-      clustered in specific cities or postal codes, or spread evenly across the country?
-    </p>
   </div>
-
-  </div><!-- /max-width wrapper -->
 </section>
