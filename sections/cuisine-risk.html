@@ -64,31 +64,25 @@
     <p class="cu-label">Cuisine type — within restaurants</p>
     <h2>Does the type of cuisine matter too?</h2>
     <p class="cu-subtitle">
-      We focused on the restaurant category — over 20,000 locations — and asked: does the
-      <em>type</em> of food a restaurant serves predict its inspection outcome? To find out,
-      we looked at each restaurant's most recent inspection only, so every restaurant is
-      counted exactly once.
+      Restaurants maek up more than 20,000 locations in the dataset, making them the largest 
+      business category by far.
+      <br>
+      The chart below explores whether inspection outcomes vary across different cuisine 
+      types using each restaurant's most recent inspection result.
     </p>
 
     <div class="cu-disclaimer">
       <span class="cu-disclaimer-icon">⚠</span>
       <div class="cu-disclaimer-text">
-        <strong>How we classified cuisines — and why it is imprecise.</strong>
-        The dataset has no "cuisine type" column. Instead, we searched each restaurant's
-        name for keywords: a restaurant is counted as "Pizza" if the word <em>pizza</em>
-        appears in its name, "Indian" if <em>indian</em> appears, and so on. This works
-        reasonably well for some types — pizza and kebab restaurants almost always say so
-        in their name — but poorly for others. Many Italian restaurants do not say "Italian";
-        many Chinese restaurants do not say "Chinese." This means cuisines that <em>do</em>
-        use their cuisine name consistently (e.g. Indian) will appear larger and may show
-        inflated risk, simply because the sample is more complete. Treat these results
-        as exploratory, not definitive.
-        <br><br>
-        <strong>What "relative risk" means:</strong> we calculated what percentage of restaurants
-        in each group had any inspection issue (Score 2 or higher) at their most recent visit.
-        We then divided that by the overall restaurant average of 2.65%. A value of
-        <strong>1.0×</strong> = exactly average. <strong>2.0×</strong> = twice as likely
-        to have an issue as a typical restaurant. Restaurant counts are shown in brackets.
+        <strong>Cuisine types are estimated from restaurant names</strong>
+        <br>
+        The inspection dataset does not include an official cuisine category, 
+        so cuisines were identified using keywords in restaurant names. This 
+        works well for some cuisines but less well for others, meaning some groups are 
+        likely more complete than others.
+        <br>
+        These results should therefore be interpreted as exploratory patterns rather than 
+        exact rankings.        
       </div>
     </div>
 
@@ -137,10 +131,12 @@
     </div>
 
     <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
-      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">        
         Cuisine type adds nuance within the restaurant world. But it's worth zooming out again:
-        how do the largest multi-location operators — the chains that run tens or hundreds of branches —
-        compare to each other? Scale should bring resources, training, and systems. Does it show up in the inspections?
+        how do the largest multi-location operators, the chains that run tens or hundreds of branches, 
+        compare to each other? 
+        <br>
+        Scale should bring resources, training, and systems. Does it show up in the inspections?
       </p>
     </div>
   </div>
