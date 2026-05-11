@@ -64,7 +64,7 @@
     <p class="cu-label">Cuisine type — within restaurants</p>
     <h2>Does the type of cuisine matter too?</h2>
     <p class="cu-subtitle">
-      Restaurants maek up more than 20,000 locations in the dataset, making them the largest 
+      Restaurants make up more than 20,000 locations in the dataset, making them the largest 
       business category by far.
       <br>
       The chart below explores whether inspection outcomes vary across different cuisine 
@@ -76,12 +76,12 @@
       <div class="cu-disclaimer-text">
         <strong>Cuisine types are estimated from restaurant names</strong>
         <br>
-        The inspection dataset does not include an official cuisine category, 
-        so cuisines were identified using keywords in restaurant names. This 
-        works well for some cuisines but less well for others, meaning some groups are 
-        likely more complete than others.
+        The inspection dataset does not include an official cuisine category,
+        so cuisines were identified using keywords in restaurant names. Only
+        <!--MATCH_RATE-->22.9%<!--/MATCH_RATE--> of restaurants (roughly 1 in 4) could be matched
+        to a cuisine group this way — restaurants with descriptive names are over-represented.
         <br>
-        These results should therefore be interpreted as exploratory patterns rather than 
+        These results should therefore be interpreted as exploratory patterns rather than
         exact rankings.        
       </div>
     </div>
@@ -90,7 +90,7 @@
 
     <div style="font-size:11px; color:#9ca3af; font-style:italic; margin-top:6px; font-family:'Manrope',system-ui,sans-serif;">
       Each restaurant is counted exactly once using its most recent inspection only.
-      Relative risk = (share of that cuisine group with Score ≥ 2) ÷ (2.65% restaurant-wide average).
+      Relative risk = (share of that cuisine group with Score ≥ 2) ÷ (<!--OVERALL_RATE-->2.65%<!--/OVERALL_RATE--> restaurant-wide average).
       Only cuisines with ≥ 30 keyword-matched restaurants are shown. Cuisines identified by keyword in business name — see methodology note above.
     </div>
 
@@ -101,20 +101,16 @@
           <span class="cu-box-title red">Highest observed risk</span>
         </div>
         <div class="cu-box-body">
-          Indian, Mexican, Thai, and Kebab restaurants all show
-          <span class="cu-hl red">≥1.8× the average risk</span> of any inspection issue —
-          though note the caveat on name-based classification above.
+          <!--HIGHEST_BOX-->Italian and Indian restaurants show <span class="cu-hl red">&ge;3&times; the average risk</span> of any inspection issue &mdash; though note the caveat on name-based classification above.<!--/HIGHEST_BOX-->
         </div>
       </div>
       <div class="cu-box orange">
         <div class="cu-box-header">
           <div class="cu-icon orange">&#9651;</div>
-          <span class="cu-box-title orange">Close to average</span>
+          <span class="cu-box-title orange">Elevated but consistent</span>
         </div>
         <div class="cu-box-body">
-          Burgers, cafés, Italian, and Vietnamese restaurants cluster around
-          <span class="cu-hl orange">1.1–1.4× the average</span> — elevated
-          but not dramatically so.
+          <!--MIDDLE_BOX-->Kebab / Shawarma, Burger, Pizza, Thai cluster around <span class="cu-hl orange">1.7&ndash;1.8&times; the average</span> &mdash; elevated but not dramatically so. Café/Coffee sits just above average at 1.12&times;.<!--/MIDDLE_BOX-->
         </div>
       </div>
       <div class="cu-box green">
@@ -123,15 +119,31 @@
           <span class="cu-box-title green">Lowest observed risk</span>
         </div>
         <div class="cu-box-body">
-          Sushi/Japanese and Chinese restaurants perform
-          <span class="cu-hl green">below the restaurant average</span> — at 0.93× and 0.88×
-          respectively — and had zero serious (score 4) outcomes in this dataset.
+          <!--LOWEST_BOX-->Sushi / Japanese restaurants perform <span class="cu-hl green">below the restaurant average</span> &mdash; at 0.80&times; &mdash; the only cuisine group to do so in this dataset.<!--/LOWEST_BOX-->
         </div>
       </div>
     </div>
 
+    <div style="margin-top:1.5rem; padding:1rem 1.25rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; max-width:780px;">
+      <p style="font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#9ca3af; margin:0 0 0.75rem;">In the press</p>
+      <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:0.65rem;">
+        <li style="font-size:13px; color:#374151; line-height:1.5;">
+          <a href="https://ugeavisen.dk/kolding/artikel/fjerde-sure-smiley-p%C3%A5-et-%C3%A5r-til-indisk-restaurant-i-kolding" target="_blank" rel="noopener" style="color:#2563eb; text-decoration:none; font-weight:500;">Ugeavisen (2023)</a>
+          — A Kolding Indian restaurant received its <strong>fourth bad smiley in a single year</strong>, racking up fines and repeat violations.
+        </li>
+        <li style="font-size:13px; color:#374151; line-height:1.5;">
+          <a href="https://kobenhavnliv.dk/kobenhavn/nu-gaar-den-ikke-laengere-kaempeboede-til-en-af-byens-mest-populaere-shawarma-steder-ryger-paa-saerlig-liste-over-de-stoerste-syndere" target="_blank" rel="noopener" style="color:#2563eb; text-decoration:none; font-weight:500;">Kobenhavnliv (2023)</a>
+          — One of Copenhagen's <strong>most popular shawarma restaurants</strong> landed on Fødevarestyrelsen's "rotten apples" watchlist after repeated violations.
+        </li>
+        <li style="font-size:13px; color:#374151; line-height:1.5;">
+          <a href="https://nyheder.tv2.dk/2013-01-11-her-er-de-vaerste-smileysyndere" target="_blank" rel="noopener" style="color:#2563eb; text-decoration:none; font-weight:500;">TV 2 (2013)</a>
+          — Denmark's worst smiley offender that year was a kebab restaurant on Vesterbrogade with <strong>7 bad smileys in 12 months</strong>. 
+        </li>
+      </ul>
+    </div>
+
     <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
-      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">        
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
         Cuisine type adds nuance within the restaurant world. But it's worth zooming out again:
         how do the largest multi-location operators, the chains that run tens or hundreds of branches, 
         compare to each other? 
@@ -158,47 +170,22 @@
       var FONT = 'Manrope, Arial, sans-serif';
       var BG   = '#fafaf9';
 
-      // Ordered lowest → highest risk (bottom → top in chart)
-      var labels = [
-        'Chinese [86]',
-        'Sushi / Japanese [405]',
-        'Italian [68]',
-        'Vietnamese [33]',
-        'Café / Coffee [1,559]',
-        'Burger [444]',
-        'Pizza [1,376]',
-        'Kebab / Shawarma [418]',
-        'Thai [138]',
-        'Mexican [39]',
-        'Indian [100]',
-      ];
-      var values = [0.88, 0.93, 1.11, 1.14, 1.31, 1.36, 1.51, 1.81, 1.92, 1.94, 2.27];
-      var colors = [
-        'rgba(34,197,94,0.75)',   // Chinese
-        'rgba(34,197,94,0.75)',   // Sushi
-        'rgba(249,115,22,0.75)', // Italian
-        'rgba(249,115,22,0.75)', // Vietnamese
-        'rgba(249,115,22,0.75)', // Café
-        'rgba(249,115,22,0.75)', // Burger
-        'rgba(239,68,68,0.75)',  // Pizza
-        'rgba(239,68,68,0.75)',  // Kebab
-        'rgba(239,68,68,0.75)',  // Thai
-        'rgba(239,68,68,0.75)',  // Mexican
-        'rgba(239,68,68,0.75)',  // Indian
-      ];
-      var hover = [
-        '<b>Chinese</b><br>Relative risk: <b>0.88×</b><br>12% less likely than average<br>Restaurants matched: 86<extra></extra>',
-        '<b>Sushi / Japanese</b><br>Relative risk: <b>0.93×</b><br>7% less likely than average<br>Restaurants matched: 405<extra></extra>',
-        '<b>Italian</b><br>Relative risk: <b>1.11×</b><br>11% more likely than average<br>Restaurants matched: 68<extra></extra>',
-        '<b>Vietnamese</b><br>Relative risk: <b>1.14×</b><br>14% more likely than average<br>Restaurants matched: 33<extra></extra>',
-        '<b>Café / Coffee</b><br>Relative risk: <b>1.31×</b><br>31% more likely than average<br>Restaurants matched: 1,559<extra></extra>',
-        '<b>Burger</b><br>Relative risk: <b>1.36×</b><br>36% more likely than average<br>Restaurants matched: 444<extra></extra>',
-        '<b>Pizza</b><br>Relative risk: <b>1.51×</b><br>51% more likely than average<br>Restaurants matched: 1,376<extra></extra>',
-        '<b>Kebab / Shawarma</b><br>Relative risk: <b>1.81×</b><br>81% more likely than average<br>Restaurants matched: 418<extra></extra>',
-        '<b>Thai</b><br>Relative risk: <b>1.92×</b><br>92% more likely than average<br>Restaurants matched: 138<extra></extra>',
-        '<b>Mexican</b><br>Relative risk: <b>1.94×</b><br>94% more likely than average<br>Restaurants matched: 39<extra></extra>',
-        '<b>Indian</b><br>Relative risk: <b>2.27×</b><br>127% more likely than average<br>Restaurants matched: 100<extra></extra>',
-      ];
+      // ── Data injected by notebook (section 3.3) — do not edit manually ──
+      var cuisineData = /*CUISINE_DATA*/[{"label": "Sushi / Japanese [378]", "cuisine": "Sushi / Japanese", "n": 378, "risk": 0.7992, "color": "rgba(34,197,94,0.75)"}, {"label": "Café / Coffee [2,050]", "cuisine": "Café / Coffee", "n": 2050, "risk": 1.1236, "color": "rgba(249,115,22,0.75)"}, {"label": "Thai [158]", "cuisine": "Thai", "n": 158, "risk": 1.6729, "color": "rgba(239,68,68,0.75)"}, {"label": "Pizza [1,375]", "cuisine": "Pizza", "n": 1375, "risk": 1.6752, "color": "rgba(239,68,68,0.75)"}, {"label": "Burger [295]", "cuisine": "Burger", "n": 295, "risk": 1.792, "color": "rgba(239,68,68,0.75)"}, {"label": "Kebab / Shawarma [271]", "cuisine": "Kebab / Shawarma", "n": 271, "risk": 1.8114, "color": "rgba(239,68,68,0.75)"}, {"label": "Indian [63]", "cuisine": "Indian", "n": 63, "risk": 2.9969, "color": "rgba(239,68,68,0.75)"}, {"label": "Italian [49]", "cuisine": "Italian", "n": 49, "risk": 3.8531, "color": "rgba(239,68,68,0.75)"}]/*END_CUISINE_DATA*/;
+
+      var labels = cuisineData.map(function(d) { return d.label; });
+      var values = cuisineData.map(function(d) { return d.risk; });
+      var colors = cuisineData.map(function(d) { return d.color; });
+      var hover  = cuisineData.map(function(d) {
+        var diff = Math.abs(Math.round((d.risk - 1) * 100));
+        var dir  = d.risk >= 1
+          ? diff + '% more likely than average'
+          : diff + '% less likely than average';
+        return '<b>' + d.cuisine + '</b><br>Relative risk: <b>' + d.risk.toFixed(2) + '×</b><br>' +
+               dir + '<br>Restaurants matched: ' + d.n.toLocaleString() + '<extra></extra>';
+      });
+
+      var maxRisk = Math.max.apply(null, values);
 
       var trace = {
         type: 'bar', orientation: 'h', cliponaxis: false, constraintext: 'none',
@@ -213,7 +200,7 @@
 
       var layout = {
         autosize: true,
-        height: 520,
+        height: Math.max(420, cuisineData.length * 44 + 80),
         margin: { l: 200, r: 80, t: 20, b: 40 },
         paper_bgcolor: BG, plot_bgcolor: BG,
         showlegend: false,
@@ -230,7 +217,7 @@
           font: { color: '#737373', size: 11, family: FONT },
         }],
         xaxis: {
-          range: [0, 2.85], dtick: 0.2, fixedrange: true,
+          range: [0, Math.max(2.85, maxRisk + 0.4)], dtick: 0.5, fixedrange: true,
           gridcolor: '#e5e5e5', zeroline: false, showline: false,
           tickfont: { size: 12, color: '#737373', family: FONT },
           ticksuffix: '×',
