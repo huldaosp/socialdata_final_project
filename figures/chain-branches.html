@@ -1,0 +1,190 @@
+<section id="chain-branches" style="padding: 3rem 1.5rem 2.5rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
+  <style>
+    #chain-branches * { box-sizing: border-box; }
+
+    .cb-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9ca3af; margin-bottom: 0.75rem;
+    }
+    #chain-branches h2 {
+      font-family: var(--font-display, 'Playfair Display', serif);
+      font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700;
+      color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.25;
+    }
+    .cb-subtitle {
+      font-size: 15px; color: #6b7280; line-height: 1.6;
+      margin-bottom: 1.5rem; max-width: 640px;
+    }
+
+    /* Legend */
+    .cb-legend {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin-bottom: 1.25rem; align-items: center;
+    }
+    .cb-legend-item { display: flex; align-items: center; gap: 6px; }
+    .cb-legend-dot {
+      width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0;
+    }
+    .cb-legend-text { font-size: 12px; color: #6b7280; }
+
+    /* Info boxes */
+    .cb-info-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .cb-box {
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .cb-box.green  { background: #f0fdf4; border: 1px solid #86efac; }
+    .cb-box.yellow { background: #fefce8; border: 1px solid #fde047; }
+    .cb-box.blue   { background: #eff6ff; border: 1px solid #93c5fd; }
+    .cb-box-header { display: flex; align-items: center; gap: 8px; }
+    .cb-icon {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; color: white;
+    }
+    .cb-icon.green  { background: #22c55e; }
+    .cb-icon.yellow { background: #eab308; }
+    .cb-icon.blue   { background: #3b82f6; }
+    .cb-box-title { font-weight: 700; font-size: 13px; }
+    .cb-box-title.green  { color: #16a34a; }
+    .cb-box-title.yellow { color: #a16207; }
+    .cb-box-title.blue   { color: #2563eb; }
+    .cb-box-body { font-size: 13px; color: #444; line-height: 1.6; }
+    .cb-hl.green  { color: #16a34a; font-weight: 700; }
+    .cb-hl.yellow { color: #a16207; font-weight: 700; }
+    .cb-hl.blue   { color: #2563eb; font-weight: 700; }
+
+    @media (max-width: 640px) { .cb-info-row { grid-template-columns: 1fr; } }
+  </style>
+
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <p class="cb-label">Chains, branches &amp; systemic patterns</p>
+    <h2>Do the biggest operators get it right?</h2>
+    <p class="cb-subtitle">
+      The chart below focuses on the <!--TOTAL_COUNT-->12<!--/TOTAL_COUNT--> largest operators, using only the 
+      <em>most recent</em> inspection result from each branch location.
+      This provides a snapshot of how these operators are currently performing 
+      across all locations, rather than an average across many years of inspections.
+    </p>
+
+    <div class="cb-legend">
+      <div class="cb-legend-item">
+        <div class="cb-legend-dot" style="background: rgba(34,197,94,0.8);"></div>
+        <span class="cb-legend-text">Score 1 — No remarks</span>
+      </div>
+      <div class="cb-legend-item">
+        <div class="cb-legend-dot" style="background: rgba(234,179,8,0.8);"></div>
+        <span class="cb-legend-text">Score 2 — Minor remarks</span>
+      </div>
+    </div>
+
+    <div id="cb-chart"></div>
+
+    <div style="font-size:11px; color:#9ca3af; font-style:italic; margin-top:8px; font-family:'Manrope',system-ui,sans-serif;">
+      Each branch counted once using its most recent inspection result. No Score 3 or 4 outcomes were recorded for any of these operators.
+    </div>
+
+    <div class="cb-info-row">
+      <div class="cb-box green">
+        <div class="cb-box-header">
+          <div class="cb-icon green">&#9733;</div>
+          <span class="cb-box-title green">Perfect records</span>
+        </div>
+                                <div class="cb-box-body">
+          <!--WORST_BOX-->AUH had the most minor remarks — <span class="cb-hl yellow">4.5% of its 66 branches</span> received a Score 2 on their latest visit. No serious problems were found.<!--/WORST_BOX-->
+        </div>
+      </div>
+      <div class="cb-box blue">
+        <div class="cb-box-header">
+          <div class="cb-icon blue">&#8776;</div>
+          <span class="cb-box-title blue">High bar overall</span>
+        </div>
+        <div class="cb-box-body">
+          All 12 operators score <span class="cb-hl blue">95%+</span> on their most
+          recent inspection round. Size and systemic processes appear to drive
+          consistently high compliance.
+        </div>
+      </div>
+      <div class="cb-box yellow">
+        <div class="cb-box-header">
+          <div class="cb-icon yellow">&#9651;</div>
+          <span class="cb-box-title yellow">Most minor issues</span>
+        </div>
+        <div class="cb-box-body">
+          AUH Dialyse Klinikken had the most minor remarks —
+          <span class="cb-hl yellow">4.5% of its 66 branches</span> received a
+          Score 2 on their latest visit. No serious problems were found.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb; font-family:'Manrope',system-ui,sans-serif;">
+      <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:680px;">
+        Business type, cuisine, and scale all appear to shape inspection outcomes. But inspections are 
+        not distributed evenly across Denmark either.
+        The next section looks at where serious inspection remarks are most concentrated geographically.
+      </p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    function run() {
+      if (typeof Plotly === 'undefined') {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+        s.onload = initChart;
+        document.head.appendChild(s);
+      } else {
+        initChart();
+      }
+    }
+
+    function initChart() {
+      var FONT = 'Manrope, Arial, sans-serif';
+      var BG   = '#fafaf9';
+
+      // Data order: index 0 = worst (shown at bottom with autorange:reversed),
+      //             index 11 = best (shown at top)
+      var traces = /*TRACES_DATA*/[{"type": "bar", "orientation": "h", "name": "No remarks", "x": [95.5, 98.4, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "y": ["AUH (66 branches)", "Psykiatrisk Center (63 branches)", "Rigshospitalet (54 branches)", "Odense Universitetshospital (51 branches)", "Legoland (37 branches)", "Nordsjællands Hospital (37 branches)", "Fårup Sommerland (37 branches)", "Parken Services (33 branches)", "Nordic Crown (32 branches)", "Tivolis kaffebar (31 branches)", "Herlev Hospital (30 branches)", "Djurs Sommerland (30 branches)"], "marker": {"color": "rgba(34,197,94,0.75)", "line": {"width": 0}}, "hovertemplate": "<b>%{y}</b><br>Score 1 — No remarks: %{x:.1f}%<extra></extra>", "showlegend": false}, {"type": "bar", "orientation": "h", "name": "Minor remarks", "x": [4.5, 1.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "y": ["AUH (66 branches)", "Psykiatrisk Center (63 branches)", "Rigshospitalet (54 branches)", "Odense Universitetshospital (51 branches)", "Legoland (37 branches)", "Nordsjællands Hospital (37 branches)", "Fårup Sommerland (37 branches)", "Parken Services (33 branches)", "Nordic Crown (32 branches)", "Tivolis kaffebar (31 branches)", "Herlev Hospital (30 branches)", "Djurs Sommerland (30 branches)"], "marker": {"color": "rgba(234,179,8,0.75)", "line": {"width": 0}}, "hovertemplate": "<b>%{y}</b><br>Score 2 — Minor remarks: %{x:.1f}%<extra></extra>", "showlegend": false}]/*END_TRACES_DATA*/;
+
+      var layout = {
+        barmode: 'stack',
+        autosize: true,
+        height: 520,
+        margin: { l: 250, r: 80, t: 20, b: 50 },
+        paper_bgcolor: BG, plot_bgcolor: BG,
+        showlegend: false,
+        bargap: 0.38,
+        font: { family: FONT, color: '#1a1a1a' },
+        hoverlabel: {
+          bgcolor: '#1c1c1e', bordercolor: '#1c1c1e',
+          font: { size: 13, family: FONT, color: '#ffffff' },
+        },
+        xaxis: {
+          range: [0, 100],
+          tickvals: [0, 25, 50, 75, 100],
+          ticksuffix: '%',
+          fixedrange: true,
+          gridcolor: '#e5e5e5', zeroline: false, showline: false,
+          tickfont: { size: 12, color: '#737373', family: FONT },
+          title: { text: 'Share of branches (latest inspection)', font: { size: 12, color: '#737373', family: FONT } },
+        },
+        yaxis: {
+          fixedrange: true,
+          autorange: 'reversed',
+          automargin: false,
+          tickfont: { size: 12, color: '#1a1a1a', family: FONT },
+        },
+      };
+
+      Plotly.newPlot('cb-chart', traces, layout, { responsive: true, displayModeBar: false });
+    }
+
+    run();
+  })();
+  </script>
+</section>

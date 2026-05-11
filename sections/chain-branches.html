@@ -64,7 +64,7 @@
     <p class="cb-label">Chains, branches &amp; systemic patterns</p>
     <h2>Do the biggest operators get it right?</h2>
     <p class="cb-subtitle">
-      The chart below focuses on the 12 largest operators, using only the 
+      The chart below focuses on the <!--TOTAL_COUNT-->12<!--/TOTAL_COUNT--> largest operators, using only the 
       <em>most recent</em> inspection result from each branch location.
       This provides a snapshot of how these operators are currently performing 
       across all locations, rather than an average across many years of inspections.
@@ -93,10 +93,8 @@
           <div class="cb-icon green">&#9733;</div>
           <span class="cb-box-title green">Perfect records</span>
         </div>
-        <div class="cb-box-body">
-          <span class="cb-hl green">9 of 12</span> large operators had a 100% clean
-          record across every branch — including Patienthotel (54 branches) and
-          Odense University Hospital (51 branches).
+                                <div class="cb-box-body">
+          <!--WORST_BOX-->AUH had the most minor remarks — <span class="cb-hl yellow">4.5% of its 66 branches</span> received a Score 2 on their latest visit. No serious problems were found.<!--/WORST_BOX-->
         </div>
       </div>
       <div class="cb-box blue">
@@ -151,42 +149,7 @@
 
       // Data order: index 0 = worst (shown at bottom with autorange:reversed),
       //             index 11 = best (shown at top)
-      var labels = [
-        'AUH Dialyse Klinikken (66 branches)',
-        'Landsbyen Sølund (25 branches)',
-        'Hvidovre Hospital Kitchen (63 branches)',
-        'Bispebjerg Hospital (27 branches)',
-        'Herlev Hospital Kitchen (30 branches)',
-        'BITE Kantine (30 branches)',
-        'Djurs Sommerland (30 branches)',
-        'Nordsjællands Hospital (37 branches)',
-        'Hotel Fårup Sommerland (37 branches)',
-        'Legoland Adventure Camp (37 branches)',
-        'Odense University Hospital (51 branches)',
-        'Patienthotel (54 branches)',
-      ];
-
-      // Latest inspection per branch — Score 2 share (minor remarks)
-      var minor = [4.5, 4.0, 1.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-      // Score 1 share (clean)
-      var best  = [95.5, 96.0, 98.4, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0];
-
-      var traces = [
-        {
-          type: 'bar', orientation: 'h', name: 'No remarks',
-          x: best, y: labels,
-          marker: { color: 'rgba(34,197,94,0.75)', line: { width: 0 } },
-          hovertemplate: '<b>%{y}</b><br>Score 1 — No remarks: %{x:.1f}%<extra></extra>',
-          showlegend: false,
-        },
-        {
-          type: 'bar', orientation: 'h', name: 'Minor remarks',
-          x: minor, y: labels,
-          marker: { color: 'rgba(234,179,8,0.75)', line: { width: 0 } },
-          hovertemplate: '<b>%{y}</b><br>Score 2 — Minor remarks: %{x:.1f}%<extra></extra>',
-          showlegend: false,
-        },
-      ];
+      var traces = /*TRACES_DATA*/[{"type": "bar", "orientation": "h", "name": "No remarks", "x": [95.5, 98.4, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "y": ["AUH (66 branches)", "Psykiatrisk Center (63 branches)", "Rigshospitalet (54 branches)", "Odense Universitetshospital (51 branches)", "Legoland (37 branches)", "Nordsjællands Hospital (37 branches)", "Fårup Sommerland (37 branches)", "Parken Services (33 branches)", "Nordic Crown (32 branches)", "Tivolis kaffebar (31 branches)", "Herlev Hospital (30 branches)", "Djurs Sommerland (30 branches)"], "marker": {"color": "rgba(34,197,94,0.75)", "line": {"width": 0}}, "hovertemplate": "<b>%{y}</b><br>Score 1 — No remarks: %{x:.1f}%<extra></extra>", "showlegend": false}, {"type": "bar", "orientation": "h", "name": "Minor remarks", "x": [4.5, 1.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "y": ["AUH (66 branches)", "Psykiatrisk Center (63 branches)", "Rigshospitalet (54 branches)", "Odense Universitetshospital (51 branches)", "Legoland (37 branches)", "Nordsjællands Hospital (37 branches)", "Fårup Sommerland (37 branches)", "Parken Services (33 branches)", "Nordic Crown (32 branches)", "Tivolis kaffebar (31 branches)", "Herlev Hospital (30 branches)", "Djurs Sommerland (30 branches)"], "marker": {"color": "rgba(234,179,8,0.75)", "line": {"width": 0}}, "hovertemplate": "<b>%{y}</b><br>Score 2 — Minor remarks: %{x:.1f}%<extra></extra>", "showlegend": false}]/*END_TRACES_DATA*/;
 
       var layout = {
         barmode: 'stack',

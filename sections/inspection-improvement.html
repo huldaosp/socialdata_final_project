@@ -139,7 +139,7 @@
 
   <div class="ii-divider"></div>
 
-  <p class="ii-section-label">Overall — all 12,972 bad inspections combined</p>
+  <p class="ii-section-label">Overall — all <!--TOTAL_BAD-->12,970<!--/TOTAL_BAD--> bad inspections combined</p>
 
   <div class="ii-overall-wrap">
     <svg id="ii-overall-donut" width="200" height="200" viewBox="0 0 200 200"
@@ -172,12 +172,8 @@
 
   <script>
     (function () {
-      const grades = [
-        { label:'Score 2', n:11039, bg:'#FEF9C3', color:'#854D0E', border:'#FDE047', fixed:9878,  improved:0,  worse:1161 },
-        { label:'Score 3', n:327,   bg:'#FFEDD5', color:'#9A3412', border:'#FB923C', fixed:262,   improved:13, worse:52   },
-        { label:'Score 4', n:1606,  bg:'#FEE2E2', color:'#991B1B', border:'#FCA5A5', fixed:1373,  improved:85, worse:148  },
-      ];
-      const overall = { fixed: 11513, improved: 98, worse: 1361, total: 12972 };
+      const grades = /*GRADES_DATA*/[{"label": "Score 2", "n": 11038, "bg": "#FEF9C3", "color": "#854D0E", "border": "#FDE047", "fixed": 9879, "improved": 0, "worse": 1159}, {"label": "Score 3", "n": 326, "bg": "#FFEDD5", "color": "#9A3412", "border": "#FB923C", "fixed": 259, "improved": 13, "worse": 54}, {"label": "Score 4", "n": 1606, "bg": "#FEE2E2", "color": "#991B1B", "border": "#FCA5A5", "fixed": 1374, "improved": 85, "worse": 147}]/*END_GRADES_DATA*/;
+      const overall = /*OVERALL_DATA*/{"fixed": 11512, "improved": 98, "worse": 1360, "total": 12970}/*END_OVERALL_DATA*/;
       const COLORS  = { fixed:'#4ade80', improved:'#fbbf24', worse:'#f87171' };
       const LABELS  = { fixed:'Fully fixed', improved:'Partially improved', worse:'Same or worse' };
       const LABELS4 = { fixed:'Fully fixed', improved:'Partially improved', worse:'Same' };
