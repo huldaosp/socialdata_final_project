@@ -1,5 +1,38 @@
 <section id="failed-inspections-map" style="padding: 3rem 1.5rem 2rem; font-family: 'Manrope', system-ui, sans-serif; background: #fafaf9;">
-  <div style="max-width: 960px; margin: 0 auto;">
+  <style>
+    #failed-inspections-map * { box-sizing: border-box; }
+    .map-info-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .map-box {
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .map-box.red    { background: #fef2f2; border: 1px solid #fca5a5; }
+    .map-box.yellow { background: #fefce8; border: 1px solid #fde047; }
+    .map-box.blue   { background: #eff6ff; border: 1px solid #93c5fd; }
+    .map-box-header { display: flex; align-items: center; gap: 8px; }
+    .map-icon {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; color: white;
+    }
+    .map-icon.red    { background: #ef4444; }
+    .map-icon.yellow { background: #eab308; }
+    .map-icon.blue   { background: #3b82f6; }
+    .map-box-title { font-weight: 700; font-size: 13px; }
+    .map-box-title.red    { color: #ef4444; }
+    .map-box-title.yellow { color: #a16207; }
+    .map-box-title.blue   { color: #2563eb; }
+    .map-box-body { font-size: 13px; color: #444; line-height: 1.6; }
+    .map-hl.red    { color: #ef4444; font-weight: 700; }
+    .map-hl.yellow { color: #a16207; font-weight: 700; }
+    .map-hl.blue   { color: #2563eb; font-weight: 700; }
+    @media (max-width: 640px) { .map-info-row { grid-template-columns: 1fr; } }
+  </style>
+
+  <div style="max-width: 1000px; margin: 0 auto;">
 
     <p style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.75rem;">
       Geography of bad inspections
@@ -8,41 +41,57 @@
       Where do bad inspections happen?
     </h2>
     <p style="font-size: 15px; color: #6b7280; line-height: 1.6; margin-bottom: 1rem; max-width: 640px;">
-      The map explores whether failed inspections are concentrated in specific parts of Denmark.
-      reas shown in red have a higher share of failed inspections than the national average, while green areas have fewer. 
-      Use the category buttons to filter by business category.
+      The map shows the ratio of failed inspections in each kommune relative to the national average.
+      Areas shown in red have a higher share of failed inspections than average, while green areas have fewer.
+      Use the dropdown to filter by business category.
     </p>
 
     <iframe
       src="figures/map-postal-codes.html"
       style="width: 100%; height: 650px; border: none; border-radius: 12px; display: block;"
-      title="Failed inspections map by postal code"
+      title="Failed inspections map by kommune"
     ></iframe>
 
-
-    <div style="margin-top: 1.5rem; max-width: 720px;">
-      <p style="font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 0.75rem;">
-        The overall map does show geographic variation. Frederiksberg (2.36×), Vallensbæk (2.40×), and København (1.89×) 
-        all appear elevated, and a handful of Jutland kommuner like Odder (2.26×) also stand out. But this picture 
-        shifts considerably when you filter by category. That is the more interesting finding: much of what looks 
-        like a geographic pattern in the overall view is actually a reflection of <em>what kinds of businesses are 
-        concentrated in those areas</em>, not something inherently local about the places themselves.
-      </p>
-      <p style="font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 0.75rem;">
-        Small kommuner should also be read with caution. Vallensbæk has only around 300 inspections, so
-        a handful of bad results can push a ratio that high without representing a real underlying pattern. 
-        Odder, with 1,575 inspections, is a more reliable number, but without knowing the business type 
-        composition there it is hard to say whether the elevation is structural or coincidental.
-      </p>
-      <p style="font-size: 15px; color: #374151; line-height: 1.8;">
-        The map is best used as an exploratory tool rather than a definitive ranking — 
-        hover over any kommune to see the raw numbers behind the color.
-      </p>
+    <div class="map-info-row">
+      <div class="map-box red">
+        <div class="map-box-header">
+          <div class="map-icon red">&#8599;</div>
+          <span class="map-box-title red">Geographic variation exists</span>
+        </div>
+        <div class="map-box-body">
+          The greater Copenhagen area stands out — Frederiksberg (<span class="map-hl red">2.36×</span>),
+          Vallensbæk (<span class="map-hl red">2.40×</span>), and København (<span class="map-hl red">1.89×</span>)
+          are all elevated. Some Jutland kommuner like Odder (<span class="map-hl red">2.26×</span>) also stand out,
+          though for less obvious reasons.
+        </div>
+      </div>
+      <div class="map-box yellow">
+        <div class="map-box-header">
+          <div class="map-icon yellow">&#9651;</div>
+          <span class="map-box-title yellow">Category matters more</span>
+        </div>
+        <div class="map-box-body">
+          The pattern shifts considerably when you filter by business type, so much of the apparent
+          geographic signal reflects <span class="map-hl yellow">where certain business types are concentrated</span>,
+          not something inherently local about those areas.
+        </div>
+      </div>
+      <div class="map-box blue">
+        <div class="map-box-header">
+          <div class="map-icon blue">&#9432;</div>
+          <span class="map-box-title blue">Small samples are noisy</span>
+        </div>
+        <div class="map-box-body">
+          Vallensbæk has only <span class="map-hl blue">~300 inspections</span> — a handful of bad results
+          can produce an extreme ratio. Hover over any kommune to see the raw numbers before drawing conclusions.
+        </div>
+      </div>
     </div>
 
-    <div style="margin-top:1.75rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid #e5e7eb;">
       <p style="font-size:15px; color:#6b7280; line-height:1.75; font-style:italic; max-width:640px;">
-        But what happens after a business receives a bad score? The final section looks at what happens next.      </p>
+        But what happens after a business receives a bad score? The final section looks at what happens next.
+      </p>
     </div>
 
   </div>
